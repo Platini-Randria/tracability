@@ -5,4 +5,9 @@ import { createVuestic } from "vuestic-ui";
 import './assets/font/roboto'
 import './style.css'
 import 'vuestic-ui/css';
-createApp(App).use(createVuestic()).mount("#app");
+import Router from "@/router/index";
+
+createApp(App)
+    .use(createVuestic())
+    .use(Router)
+    .mount("#app");

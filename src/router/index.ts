@@ -8,7 +8,9 @@ const routes = [
   { path: '/userAdd', name: 'UserAdd', component: UserAddView },
 ]
 
-export const router = createRouter({
+const router = createRouter({
   history: createMemoryHistory(),
   routes,
 })
+
+export default router
