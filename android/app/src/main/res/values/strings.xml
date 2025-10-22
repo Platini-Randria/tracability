@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">tracability</string>
+    <string name="title_activity_main">tracability</string>
+    <string name="package_name">com.tracability.app</string>
+    <string name="custom_url_scheme">com.tracability.app</string>
+</resources>

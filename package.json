@@ -4,17 +4,23 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vue-tsc -b && vite build",
+    "dev": "cp .env.local .env && vite",
+    "build": "cp .env.prod .env && vue-tsc -b && vite build && npx cap sync",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@capacitor/android": "^7.4.4",
+    "@capacitor/core": "^7.4.4",
+    "@capacitor/ios": "^7.4.4",
     "@fontsource/roboto": "^5.2.8",
     "axios": "^1.12.2",
+    "idb": "^8.0.3",
+    "lucide-vue-next": "^0.546.0",
     "vue": "^3.5.22",
     "vuestic-ui": "^1.10.3"
   },
   "devDependencies": {
+    "@capacitor/cli": "^7.4.4",
     "@types/node": "^24.6.0",
     "@vitejs/plugin-vue": "^6.0.1",
     "@vue/tsconfig": "^0.8.1",

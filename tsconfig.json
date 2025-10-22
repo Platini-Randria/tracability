@@ -1,7 +1,32 @@
 {
-  "files": [],
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
-  ]
+	"compilerOptions": {
+		"baseUrl": ".",
+		"paths": {
+			"@/*": ["src/*"]
+		},
+		"noEmit": true,
+		"target": "esnext",
+		"useDefineForClassFields": true,
+		"module": "ESNext",
+		"moduleResolution": "bundler",
+		"strict": true,
+		"jsx": "preserve",
+		"sourceMap": true,
+		"resolveJsonModule": true,
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
+		"lib": ["esnext", "dom"],
+		"skipLibCheck": true,
+		"types": ["vite/client"],
+		"allowJs": true
+	},
+	"include": [
+		"src/**/*.ts",
+		"*.js",
+		"src/**/*.d.ts",
+		"src/**/*.vue",
+		"vite.config.ts",
+		"node_modules/vuestic-ui"
+	],
+	"exclude": ["node_modules/**/*"]
 }
