@@ -6,7 +6,7 @@ export interface IMaterial {
     category: string;
     total_quantity: number;
     available_quantity?: number;
-    date: Date;
+    createdAt?: Date;
 }   
 
 

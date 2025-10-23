@@ -11,3 +11,8 @@ export enum ROLE {
     ADMIN = "Administrateur",
     USER = "Utilisateur"
 }
+
+export enum SEX {
+    M = "Masculin",
+    F = "Féminin"
+}
