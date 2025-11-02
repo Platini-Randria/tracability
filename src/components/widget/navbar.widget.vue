@@ -1,8 +1,8 @@
 <template>
-    <div class="h-52 navbar">
+    <div class="navbar">
 
 
-        <VaSidebar v-model="enabled">
+        <VaSidebar class="nav" v-model="enabled">
 
             <VaSidebarItem>
                 <VaSidebarItemContent>
@@ -22,13 +22,25 @@
                     </VaSidebarItemTitle>
                 </VaSidebarItemContent>
             </VaSidebarItem>
-            <VaSidebarItem>
+
+            <VaSidebarItem @click="seeAdmin">
                 <VaSidebarItemContent>
                     <PackagePlus />
 
                     <VaSidebarItemTitle>
 
-                        Creation compte admin
+                        Creation compte administrateur
+                    </VaSidebarItemTitle>
+                </VaSidebarItemContent>
+            </VaSidebarItem>
+
+            <VaSidebarItem @click="seeUser">
+                <VaSidebarItemContent>
+                    <PackagePlus />
+
+                    <VaSidebarItemTitle>
+
+                        Creation compte utilisateur
                     </VaSidebarItemTitle>
                 </VaSidebarItemContent>
             </VaSidebarItem>
@@ -74,12 +86,18 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { Menu, PackagePlus, X } from "lucide-vue-next";
 
-const emit = defineEmits(["material", "agent", "acquisition", "reservation"])
+const emit = defineEmits(["material", "agent", "acquisition", "reservation", "enabled", "disabled", "user", "admin"]);
 const enabled = ref(false);
-
+watch(() => enabled.value, () => {
+    if (enabled.value) {
+        emit("enabled");
+    } else {
+        emit("disabled");
+    }
+});
 const options = ref([
     { label: "Open", value: true },
     { label: "Close", value: false },
@@ -103,11 +121,28 @@ const seeReservation = () => {
     resetNav()
 }
 
+const seeUser = () => {
+    emit("user")
+    resetNav()
+}
+
+const seeAdmin = () => {
+    emit("admin")
+    resetNav()
+}
+
 </script>
 <style scoped>
 .navbar {
     position: fixed;
     top: 0;
+
+}
+
+.nav {
+    height: 100vh;
+    width: 100vw;
+    z-index: 999;
 }
 
 /* .humberger {

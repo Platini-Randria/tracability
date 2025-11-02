@@ -2,28 +2,7 @@
     <section>
 
 
-        <!-- -----------------Form ajout materiel---------------------------- -->
-
-        <div>
-            <VaCollapse v-model="value" header="Formulaire pour ajouter nouveau materiel" solid color="primary">
-
-                <VaInput v-model="materialData.name" class="mb-6 input" messages="Pas trop long" label="Nom du materiel"
-                    placeholder="Entrer le nom du materiel" />
-
-                <VaSelect class="input" v-model="materialData.state" label="Etat du materiel" :options="stateOptions" />
-                <VaSelect class="input" v-model="materialData.category" label="Etat du materiel"
-                    :options="categoryOptions" />
-                <VaCounter class="input" v-model="materialData.total_quantity" buttons />
-                <VaButton class="input" @click="submit">
-                    Enregistrer
-                </VaButton>
-
-            </VaCollapse>
-        </div>
-
-
-
-        <div>
+         <div>
             <h1>Liste de materiel</h1>
         </div>
 
@@ -37,12 +16,12 @@
 
 
                 <!-- ------Update Button--------->
-                <VaButton color="info" size="small" preset="plain" @click="editModal = !editModal">
+                <VaButton color="info"  @click="editModal = !editModal">
                     <VaIcon name="edit" class="mr-2" />
                 </VaButton>
 
                 <!-- ------Delete Button--------->
-                <VaButton color="danger" size="small" preset="plain" @click="deleteModal = !deleteModal">
+                <VaButton color="danger" @click="deleteModal = !deleteModal">
                     <VaIcon name="delete" class="mr-2" />
                 </VaButton>
 
@@ -55,13 +34,13 @@
                 </VaCardContent>
 
                 <!-- ------Update Button--------->
-                <VaButton color="info" size="small" preset="plain" @click="editModal = !editModal">
+                <VaButton color="info" @click="editModal = !editModal">
                     <VaIcon name="edit" class="mr-2" />
                     Modifier
                 </VaButton>
 
                 <!-- ------Delete Button--------->
-                <VaButton color="danger" size="small" preset="plain" @click="deleteModal = !deleteModal">
+                <VaButton color="danger" @click="deleteModal = !deleteModal">
                     <VaIcon name="delete" class="mr-2" />
                     Supprimer
                 </VaButton>
@@ -74,19 +53,20 @@
                 </VaCardContent>
 
                 <!-- ------Update Button--------->
-                <VaButton color="info" size="small" preset="plain" @click="editModal = !editModal">
+                <VaButton color="info" @click="editModal = !editModal">
                     <VaIcon name="edit" class="mr-2" />
                     Modifier
                 </VaButton>
 
                 <!-- ------Delete Button--------->
-                <VaButton color="danger" size="small" preset="plain" @click="deleteModal = !deleteModal">
+                <VaButton color="danger" @click="deleteModal = !deleteModal">
                     <VaIcon name="delete" class="mr-2" />
                     Supprimer
                 </VaButton>
             </VaCard>
 
         </div>
+
 
 
         <!-- ------Modal de modification --------->
@@ -94,41 +74,32 @@
             <h3 class="va-h3">
                 Modification de l'information du materiel
             </h3>
-            <VaInput v-model="materialData.name" class="mb-6 input" messages="Pas trop long" label="Nom du materiel"
+            <VaInput v-model="" class="mb-6 input" messages="Pas trop long" label="Nom du materiel"
                 placeholder="Entrer le nom du materiel" />
 
-            <VaSelect class="input" v-model="materialData.state" label="Etat du materiel" :options="stateOptions" />
-            <VaSelect class="input" v-model="materialData.category" label="Etat du materiel"
+            <VaSelect class="input" v-model="" label="Etat du materiel" :options="stateOptions" />
+            <VaSelect class="input" v-model="" label="Etat du materiel"
                 :options="categoryOptions" />
-            <VaCounter class="input" v-model="materialData.total_quantity" buttons />
+            <VaCounter class="input" v-model="" buttons />
 
         </VaModal>
 
         <!-- ------Modal de suppression --------->
-        <div>
-            <VaModal v-model="deleteModal" title="Confirmation de suppression"
-                message="Êtes-vous sûr de vouloir supprimer ce materiel ? Cette action est irréversible." ok-text="Oui"
-                cancel-text="Non" @ok="" @cancel="deleteModal = false" blur />
-        </div>
+        <VaModal v-model="deleteModal"
+            message="Classic modal overlay which represents a dialog box or other interactive component, such as a dismissible alert, sub-window, etc."
+            ok-text="Apply" blur />
+
+
 
 
 
     </section>
 </template>
+
 <script setup lang="ts">
-import { MATERIAL_CATEGORY, MATERIAL_STATE } from '@/enum/material.enum';
-import { IMaterial } from '@/model/material';
-import { MaterialService } from '@/service/material.service';
+import { MATERIAL_STATE } from '@/enum/material.enum';
+import { MATERIAL_CATEGORY } from '@/enum/material.enum';
 import { ref } from 'vue';
-
-
-const materialData = ref<IMaterial>({
-    name: '',
-    state: '',
-    category: '',
-    total_quantity: 0,
-
-})
 
 const stateOptions = [
     {
@@ -177,30 +148,8 @@ const categoryOptions = [
     },
 ]
 
-
-const submit = async () => {
-    const response = await MaterialService.uploadMaterial(materialData.value)
-}
-
-
 const editModal = ref<boolean>(false)
 
 const deleteModal = ref<boolean>(false)
 
-const value = ref<boolean>(false)
-
 </script>
-<style scoped>
-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 5vw;
-}
-
-.input {
-    width: 80vw;
-    margin-bottom: 5vw;
-}
-</style>

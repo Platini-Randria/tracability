@@ -6,4 +6,12 @@ export class UserService {
     static async uploadUser(data: IUser): Promise<IApiUserResponse> {
         return (await UserApi.uploadUser(data)).data
     }
+
+    static async getAllUsers(): Promise<IApiUserResponse> {
+        return (await UserApi.getAllUsers()).data
+    }
+
+    static async deleteUser(id: number): Promise<IApiUserResponse> {
+        return (await UserApi.deleteUser(id)).data
+    }
 }

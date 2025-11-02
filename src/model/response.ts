@@ -1,6 +1,7 @@
 import { IMaterial } from "./material";
 import { IUser } from "./user"
 import { IAcquisition } from "./acquisition";
+import { IReservation } from "./reservation";
 
 export interface IApiResponse {
     success: boolean,
@@ -17,5 +18,9 @@ export interface IApiUserResponse extends IApiResponse {
 }
 
 export interface IApiAcquisitionResponse extends IApiResponse {
-    date: IAcquisition[]
+    data: IAcquisition[]
+}
+
+export interface IApiReservationResponse extends IApiResponse {
+    data: IReservation[]
 }

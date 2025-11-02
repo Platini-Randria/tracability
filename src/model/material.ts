@@ -7,6 +7,7 @@ export interface IMaterial {
     total_quantity: number;
     available_quantity?: number;
     createdAt?: Date;
+    updatedAt?: Date;
 }   
 
 

@@ -1,8 +1,61 @@
 <template>
 
     <section>
+
         <div>
-            <VaCollapse class="min-w-96" header="Formulaire pour ajouter agent">
+            <va-list>
+                <va-list-label>Agents</va-list-label>
+                <va-list-item v-for="(agents, index) in agents" :key="index" class="list__item" to="/">
+                    <va-list-item-section avatar>
+                        <va-avatar>
+                            <img :src="agents.img">
+                        </va-avatar>
+                    </va-list-item-section>
+
+                    <va-list-item-section>
+                        <va-list-item-label>
+                            {{ agents.name }}
+                        </va-list-item-label>
+                        <va-list-item-label caption>
+                            {{ agents.address }}
+                        </va-list-item-label>
+
+                        <va-list-item-section icon>
+                            <div class="d-flex gap-2">
+                                <!-- ------Update Button--------->
+                                <VaButton color="info" size="small" preset="plain" @click="editModal = !editModal">
+                                    Modifier
+                                    <VaIcon name="edit" class="mr-2" />
+                                </VaButton>
+
+                                <!-- ------Delete Button--------->
+                                <VaButton color="danger" size="small" preset="plain"
+                                    @click="deleteModal = !deleteModal">
+                                    Supprimer
+                                    <VaIcon name="delete" class="mr-2" />
+                                </VaButton>
+
+                            </div>
+                        </va-list-item-section>
+
+
+                    </va-list-item-section>
+
+                    <va-list-item-section icon>
+                        <va-icon />
+                    </va-list-item-section>
+                </va-list-item>
+            </va-list>
+        </div>
+
+
+        <!-- ------Modal de modification --------->
+        <div>
+            <VaModal v-model="editModal" ok-text="Appliquer">
+                <h3 class="va-h3">
+                    Modification du profil agent
+                </h3>
+
                 <VaForm ref="myForm" class="flex flex-col gap-2">
 
                     <div>
@@ -32,40 +85,21 @@
 
                         <VaSelect class="input" v-model="userData.role" label="Role" :options="roleOptions" />
 
-                        <VaButton class="input" @click="submit">
-                            Enregistrer
-                        </VaButton>
 
                     </div>
 
                 </VaForm>
-            </VaCollapse>
+
+            </VaModal>
         </div>
+
+        <!-- ------Modal de suppression --------->
         <div>
-            <va-list>
-                <va-list-label>Agents</va-list-label>
-                <va-list-item v-for="(agents, index) in agents" :key="index" class="list__item" to="/">
-                    <va-list-item-section avatar>
-                        <va-avatar>
-                            <img :src="agents.img">
-                        </va-avatar>
-                    </va-list-item-section>
-
-                    <va-list-item-section>
-                        <va-list-item-label>
-                            {{ agents.name }}
-                        </va-list-item-label>
-                        <va-list-item-label caption>
-                            {{ agents.address }}
-                        </va-list-item-label>
-                    </va-list-item-section>
-
-                    <va-list-item-section icon>
-                        <va-icon />
-                    </va-list-item-section>
-                </va-list-item>
-            </va-list>
+            <VaModal v-model="deleteModal" title="Confirmation de suppression"
+                message="Êtes-vous sûr de vouloir supprimer cet agent ? Cette action est irréversible." ok-text="Oui"
+                cancel-text="Non" @ok="" @cancel="deleteModal = false" blur />
         </div>
+
         <div>
             <VaScrollContainer class="max-h-52" vertical>
                 <VaList>
@@ -105,11 +139,15 @@ import { IUser } from '@/model/user';
 import { UserService } from '@/service/user.service';
 import { ref } from 'vue';
 
-import platini from '@/assets/sary.jpg'
+import { IMaterial } from '@/model/material';
+
+import { imgPath } from "@/const/img.const";
 import { text } from 'stream/consumers';
 import { VaValue } from 'vuestic-ui';
 
 import { useForm } from 'vuestic-ui'
+
+
 
 const userData = ref<IUser>({
     name: '',
@@ -125,52 +163,6 @@ const userData = ref<IUser>({
     role: '',
     password: '',
 })
-
-const sexOptions = [
-    {
-        text: SEX.M,
-        value: SEX.M
-    }
-]
-
-const familyOptions = [
-    {
-        text: FAMILY.SINGLE,
-        value: FAMILY.SINGLE
-    },
-    {
-        text: FAMILY.ENGAGED,
-        value: FAMILY.ENGAGED
-    },
-    {
-        text: FAMILY.DIVORCED,
-        value: FAMILY.DIVORCED
-    },
-    {
-        text: FAMILY.WIDOWED,
-        value: FAMILY.WIDOWED
-    },
-    {
-        text: FAMILY.OTHER,
-        value: FAMILY.OTHER
-    },
-]
-
-const roleOptions = [
-    {
-        text: ROLE.ADMIN,
-        VaValue: ROLE.ADMIN
-    },
-    {
-        text: ROLE.USER,
-        VaValue: ROLE.USER
-    }
-]
-
-const submit = async () => {
-    const response = await UserService.uploadUser(userData.value)
-}
-
 
 const { isLoading, isValid } = useForm('myForm')
 
@@ -192,22 +184,22 @@ const agents: Agent[] = [
     {
         name: "Audrey Clay",
         address: "644 Vermont Court, Freelandville, Kentucky, 2619",
-        img: "platini",
+        img: imgPath.Logo,
     },
     {
         name: "Aguirre Klein",
         address: "626 Carroll Street, Roulette, Ohio, 1477",
-        img: "platini",
+        img: imgPath.Logo,
     },
     {
         name: "Tucker Kaufman",
         address: "887 Winthrop Street, Tryon, Florida, 3912",
-        img: "platini",
+        img: imgPath.Logo,
     },
     {
         name: "Herbert Keller",
         address: "286 NW. Shore St.Longwood, FL 32779",
-        img: "platini",
+        img: imgPath.Logo,
     },
 ];
 
@@ -244,6 +236,8 @@ const Agents = [
     },
 ];
 
+
+
 interface formCollapse {
     value: boolean;
 }
@@ -253,6 +247,10 @@ const formCollapse: formCollapse[] = [
         value: false,
     }
 ]
+
+const editModal = ref<boolean>(false)
+
+const deleteModal = ref<boolean>(false)
 
 </script>
 
